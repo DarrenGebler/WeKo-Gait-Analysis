@@ -109,15 +109,17 @@ To launch the EC2 instance, follow the steps below:
 
 6. Click 'Next: Add Storage'
 
-7. Un-tick 'Delete on Termination' and click 'Review and Launch'
+7. Un-tick 'Delete on Termination' and click 'Next: Add Tags'
 
-8. Click 'Launch'
+8. Add Tag and input 'ML-runner' and 'data-processing' for the Key and Value fields respectively.
 
-9. From the drop down menu, select 'Create a new key pair' and enter a key pair name. Remember the name you entered.
+9. Click 'Launch'
 
-10. Download the key pair and keep it somewhere safe.
+10. From the drop down menu, select 'Create a new key pair' and enter a key pair name. Remember the name you entered.
 
-11. Click 'Launch Instances'
+11. Download the key pair and keep it somewhere safe.
+
+12. Click 'Launch Instances'
 
 Setting up
 **********
@@ -174,6 +176,12 @@ to
 
     userdata.txt && sudo mv EC2Prediction.py ../.. && sudo mv SMTPEmail.py ../.. && sudo mv UserDatabase.py ../..
 
+13. Enter the following command
+
+.. code-block::
+
+    docker pull darrengebler/weko-openpose-aws
+
 The EC2 instance is setup. A Lambda function will now be setup to link everything together and automate the pipeline.
 
 Lambda
@@ -189,6 +197,6 @@ To setup the Lambda function, follow the steps below:
 
 4. Find the S3 bucket you created above, set the Event type to 'All object create events' and the Prefix to 'input/'. Click 'Add'
 
-5. In the 'Function code' area, copy and paste the following source code
+5. In the 'Function code' area, copy and paste the following source code, changing the 'BUCKET_NAME' variable to the bucket name you created above
 
 .. literalinclude:: ../../src/Lambda.py

@@ -91,6 +91,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#module-src.NormaliseAndSplit">WeKo Gait Normalise and Split</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#weko-gait-smtp-email">WeKo Gait SMTP Email</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#weko-gait-user-database">WeKo Gait User Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-src.OpenPoseLocal">WeKo Gait Local Openpose</a></li>
 </ul>
 </li>
 </ul>
@@ -403,6 +404,17 @@ Returns score sample based on how far from the mean the keypoints are.</p>
 </dl>
 </dd></dl>
 
+</dd></dl>
+
+</div>
+<div class="section" id="module-src.OpenPoseLocal">
+<span id="weko-gait-local-openpose"></span><h2>WeKo Gait Local Openpose<a class="headerlink" href="#module-src.OpenPoseLocal" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="src.OpenPoseLocal.run">
+<code class="sig-prename descclassname">src.OpenPoseLocal.</code><code class="sig-name descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/OpenPoseLocal.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.OpenPoseLocal.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs OpenPose on all videos in a specified directory. You are required to have OpenPose built, as well as OpenCV
+installed. This script currently only works on Windows. Future work will include building for MACOSX and Linux.
+Place the downloaded models in a models folder, and set the directory.</p>
 </dd></dl>
 
 </div>

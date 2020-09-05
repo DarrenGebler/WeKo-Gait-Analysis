@@ -34,3 +34,8 @@ WeKo Gait User Database
 =======================
 .. autoclass:: src.UserDatabase.UserData
    :members:
+
+WeKo Gait Local Openpose
+========================
+.. automodule:: src.OpenPoseLocal
+   :members:

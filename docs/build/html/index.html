@@ -167,6 +167,7 @@
 <li class="toctree-l2"><a class="reference internal" href="functions.html#module-src.NormaliseAndSplit">WeKo Gait Normalise and Split</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functions.html#weko-gait-smtp-email">WeKo Gait SMTP Email</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functions.html#weko-gait-user-database">WeKo Gait User Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#module-src.OpenPoseLocal">WeKo Gait Local Openpose</a></li>
 </ul>
 </li>
 </ul>
@@ -264,7 +265,8 @@ to access the bucket.</p>
 <li><p>Filter instance types to GPU instances and select ‘g4dn.xlarge’ and press ‘Next: Configure Instance Details’</p></li>
 <li><p>Under ‘IAM role’ select the IAM policy name you created above</p></li>
 <li><p>Click ‘Next: Add Storage’</p></li>
-<li><p>Un-tick ‘Delete on Termination’ and click ‘Review and Launch’</p></li>
+<li><p>Un-tick ‘Delete on Termination’ and click ‘Next: Add Tags’</p></li>
+<li><p>Add Tag and input ‘ML-runner’ and ‘data-processing’ for the Key and Value fields respectively.</p></li>
 <li><p>Click ‘Launch’</p></li>
 <li><p>From the drop down menu, select ‘Create a new key pair’ and enter a key pair name. Remember the name you entered.</p></li>
 <li><p>Download the key pair and keep it somewhere safe.</p></li>
@@ -316,6 +318,12 @@ python3 EC2Prediction.py
 <div class="highlight-XML notranslate"><div class="highlight"><pre><span></span>userdata.txt &amp;&amp; sudo mv EC2Prediction.py ../.. &amp;&amp; sudo mv SMTPEmail.py ../.. &amp;&amp; sudo mv UserDatabase.py ../..
 </pre></div>
 </div>
+<ol class="arabic simple" start="13">
+<li><p>Enter the following command</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">pull</span> <span class="n">darrengebler</span><span class="o">/</span><span class="n">weko</span><span class="o">-</span><span class="n">openpose</span><span class="o">-</span><span class="n">aws</span>
+</pre></div>
+</div>
 <p>The EC2 instance is setup. A Lambda function will now be setup to link everything together and automate the pipeline.</p>
 </div>
 </div>
@@ -327,7 +335,7 @@ python3 EC2Prediction.py
 <li><p>Select ‘Create function’, give your function a name and select the Runtime language to ‘Python 3.8’</p></li>
 <li><p>Click ‘Add trigger’ and select ‘S3’ from the drop down list</p></li>
 <li><p>Find the S3 bucket you created above, set the Event type to ‘All object create events’ and the Prefix to ‘input/’. Click ‘Add’</p></li>
-<li><p>In the ‘Function code’ area, copy and paste the following source code</p></li>
+<li><p>In the ‘Function code’ area, copy and paste the following source code, changing the ‘BUCKET_NAME’ variable to the bucket name you created above</p></li>
 </ol>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">boto3</span>
 <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">unquote_plus</span>
