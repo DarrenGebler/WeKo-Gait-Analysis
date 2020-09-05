@@ -1,0 +1,271 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>src.SMTPEmail &mdash; WeKoGaitAnalysis 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> WeKoGaitAnalysis
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">WeKo’s Gait Analysis Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../functions.html">Python Scripts</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">WeKoGaitAnalysis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>src.SMTPEmail</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for src.SMTPEmail</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">smtplib</span>
+<span class="kn">import</span> <span class="nn">ssl</span>
+<span class="kn">from</span> <span class="nn">email.mime.multipart</span> <span class="kn">import</span> <span class="n">MIMEMultipart</span>
+<span class="kn">from</span> <span class="nn">email.mime.text</span> <span class="kn">import</span> <span class="n">MIMEText</span>
+
+
+<div class="viewcode-block" id="SendEmail"><a class="viewcode-back" href="../../functions.html#src.SMTPEmail.SendEmail">[docs]</a><span class="k">class</span> <span class="nc">SendEmail</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">email</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialise SendEmail class.</span>
+
+<span class="sd">        :param filename: Filename created by EC2Prediction</span>
+<span class="sd">        :param email: User email.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="n">email</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-fullstop-&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">useremail</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-atsymbol-&quot;</span><span class="p">,</span> <span class="s2">&quot;@&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">senderemail</span> <span class="o">=</span> <span class="s2">&quot;wekohealth@gmail.com&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;LcVS8f55e#JT&quot;</span>
+
+<div class="viewcode-block" id="SendEmail.write_email"><a class="viewcode-back" href="../../functions.html#src.SMTPEmail.SendEmail.write_email">[docs]</a>    <span class="k">def</span> <span class="nf">write_email</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Writes and sends email to user.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">MIMEMultipart</span><span class="p">(</span><span class="s2">&quot;alternative&quot;</span><span class="p">)</span>
+        <span class="n">username</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">useremail</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;@&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">message</span><span class="p">[</span><span class="s2">&quot;Subject&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;WeKo Walking Analysis Results for </span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">message</span><span class="p">[</span><span class="s2">&quot;From&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">senderemail</span>
+        <span class="n">message</span><span class="p">[</span><span class="s2">&quot;To&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">useremail</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Preparing to send email to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">useremail</span><span class="si">}</span><span class="se">\n\n\n\n\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Text if email doesnt support HTML</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="s2">        Your video with keypoints overlayed can be found at https://gait-analysis.s3-ap-southeast-2.amazonaws.com/output_videos/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">.</span>
+<span class="s2">        Thank you for uploading your walking video, we appreciate really appreciate it!</span>
+<span class="s2">        If you want to try your luck at getting the celebrity you want, simply record yourself walking again on our website (weko.health)</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># HTML if email does support HTML</span>
+        <span class="n">html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="s2">        &lt;html&gt;</span>
+<span class="s2">            &lt;body&gt;</span>
+<span class="s2">                &lt;p&gt;</span>
+<span class="s2">                    Your video with keypoints overlayed can be found &lt;a href=&quot;https://gait-analysis.s3-ap-southeast-2.amazonaws.com/output_videos/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;&gt;Here&lt;/a&gt;.</span>
+<span class="s2">                    &lt;br&gt;&lt;br&gt;Thank you for uploading your walking video, we appreciate really appreciate it!</span>
+
+<span class="s2">                    &lt;br&gt;&lt;br&gt;If you want to try your luck at getting the celebrity you want, simply record yourself walking again </span>
+<span class="s2">                    on our website, &lt;a href=&quot;weko.health&quot;&gt;WeKo Health&lt;/a&gt; </span>
+<span class="s2">                &lt;/p&gt; </span>
+<span class="s2">            &lt;/body&gt; </span>
+<span class="s2">        &lt;/html&gt; </span>
+<span class="s2">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Creates two parts to allow all email clients to receive email</span>
+        <span class="n">part1</span> <span class="o">=</span> <span class="n">MIMEText</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="s2">&quot;plain&quot;</span><span class="p">)</span>
+        <span class="n">part2</span> <span class="o">=</span> <span class="n">MIMEText</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">)</span>
+
+        <span class="n">message</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">part1</span><span class="p">)</span>
+        <span class="n">message</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">part2</span><span class="p">)</span>
+
+        <span class="n">text</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span>
+
+        <span class="c1"># Initialise SSL</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">create_default_context</span><span class="p">()</span>
+
+        <span class="c1"># Send email via gmail smtp server.</span>
+        <span class="k">with</span> <span class="n">smtplib</span><span class="o">.</span><span class="n">SMTP</span><span class="p">(</span><span class="s2">&quot;smtp.gmail.com&quot;</span><span class="p">,</span> <span class="mi">587</span><span class="p">)</span> <span class="k">as</span> <span class="n">server</span><span class="p">:</span>
+            <span class="n">server</span><span class="o">.</span><span class="n">ehlo</span><span class="p">()</span>
+            <span class="n">server</span><span class="o">.</span><span class="n">starttls</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">)</span>
+            <span class="n">server</span><span class="o">.</span><span class="n">ehlo</span><span class="p">()</span>
+            <span class="n">server</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">senderemail</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">)</span>
+            <span class="n">server</span><span class="o">.</span><span class="n">sendmail</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">senderemail</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">useremail</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Darren Gebler
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

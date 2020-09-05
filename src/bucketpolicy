@@ -1,0 +1,18 @@
+{
+    "Version": "2012-10-17",
+    "Id": "Policy1597987556023",
+    "Statement": [
+        {
+            "Sid": "Stmt1597987554594",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": [
+                "s3:GetObject",
+                "s3:GetObjectAcl",
+                "s3:PutObject",
+                "s3:PutObjectAcl"
+            ],
+            "Resource": "arn:aws:s3:::BUCKET_NAME/*"
+        }
+    ]
+}
