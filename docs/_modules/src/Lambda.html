@@ -1,0 +1,282 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>src.Lambda &mdash; WeKoGaitAnalysis 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> WeKoGaitAnalysis
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">WeKo’s Gait Analysis Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../functions.html">Python Scripts</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">WeKoGaitAnalysis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>src.Lambda</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for src.Lambda</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">boto3</span>
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">unquote_plus</span>
+
+<span class="n">BUCKET_NAME</span> <span class="o">=</span> <span class="s2">&quot;gait-analysis&quot;</span>
+<span class="n">CONFIG_FILE_KEY</span> <span class="o">=</span> <span class="s2">&quot;config/ec2-launch-config.json&quot;</span>
+<span class="n">BUCKET_INPUT_DIR</span> <span class="o">=</span> <span class="s2">&quot;input&quot;</span>
+<span class="n">BUCKET_OUTPUT_DIR</span> <span class="o">=</span> <span class="s2">&quot;output&quot;</span>
+
+
+<div class="viewcode-block" id="lambda_handler"><a class="viewcode-back" href="../../functions.html#src.Lambda.lambda_handler">[docs]</a><span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">raw_event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main function call when file is uploaded to gait-analysis/input folder</span>
+
+<span class="sd">    :param raw_event: Event that occured</span>
+<span class="sd">    :param context: Methods and properties of Lambda</span>
+<span class="sd">    :return: Dictionary of Instance states</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Used for Cloudwatch debugging</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received raw event: </span><span class="si">{</span><span class="n">raw_event</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Loops through all events that triggered Lambda</span>
+    <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">raw_event</span><span class="p">[</span><span class="s1">&#39;Records&#39;</span><span class="p">]:</span>
+        <span class="c1"># Bucket that triggered Lambda</span>
+        <span class="n">bucket</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="s1">&#39;s3&#39;</span><span class="p">][</span><span class="s1">&#39;bucket&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Triggering S3 Bucket: </span><span class="si">{</span><span class="n">bucket</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># File that triggered Lambda</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">unquote_plus</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;s3&#39;</span><span class="p">][</span><span class="s1">&#39;object&#39;</span><span class="p">][</span><span class="s1">&#39;key&#39;</span><span class="p">])</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Triggering key in S3: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Set EC2 filters to check for existing Instance</span>
+        <span class="n">ec2_filters</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s2">&quot;tag:Purpose&quot;</span><span class="p">,</span>
+                <span class="s1">&#39;Values&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;data-processing&#39;</span><span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+
+        <span class="c1"># Initialise boto3 s3 to copy file from input folder to processing folder</span>
+        <span class="n">S3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">resource</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">)</span>
+        <span class="n">copy_source</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;Bucket&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">BUCKET_NAME</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Key&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Copy file</span>
+        <span class="n">video_name</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;input/&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">bucket</span> <span class="o">=</span> <span class="n">S3</span><span class="o">.</span><span class="n">Bucket</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">BUCKET_NAME</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">bucket</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">copy_source</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;processing/</span><span class="si">{</span><span class="n">video_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Initialise boto3 ec2</span>
+        <span class="n">EC2</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;ec2&#39;</span><span class="p">,</span> <span class="n">region_name</span><span class="o">=</span><span class="s2">&quot;ap-southeast-2&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[DEBUG] Copied and created boto3 client&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[INFO] Describing EC2 instances with target tags...&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Returns all instances with ec2_filters target tags</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">EC2</span><span class="o">.</span><span class="n">describe_instances</span><span class="p">(</span><span class="n">Filters</span><span class="o">=</span><span class="n">ec2_filters</span><span class="p">)</span>
+
+        <span class="c1"># Checks if instance has been created</span>
+        <span class="k">if</span> <span class="n">resp</span><span class="p">[</span><span class="s2">&quot;Reservations&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="p">[]:</span>  <span class="c1"># at least one instance with target tags was found</span>
+            <span class="c1"># Loops through all instances with target tags. Should only ever be one</span>
+            <span class="k">for</span> <span class="n">reservation</span> <span class="ow">in</span> <span class="n">resp</span><span class="p">[</span><span class="s2">&quot;Reservations&quot;</span><span class="p">]:</span>
+                <span class="k">for</span> <span class="n">instance</span> <span class="ow">in</span> <span class="n">reservation</span><span class="p">[</span><span class="s2">&quot;Instances&quot;</span><span class="p">]:</span>
+                    <span class="c1"># Used for Cloudwatch debugging</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Found &#39;</span><span class="si">{</span><span class="n">instance</span><span class="p">[</span><span class="s1">&#39;State&#39;</span><span class="p">][</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39; instance &#39;</span><span class="si">{</span><span class="n">instance</span><span class="p">[</span><span class="s1">&#39;InstanceId&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+                          <span class="sa">f</span><span class="s2">&quot; having target tags: </span><span class="si">{</span><span class="n">instance</span><span class="p">[</span><span class="s1">&#39;Tags&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">)</span>
+
+                    <span class="c1"># Instance found in stopped state. Start instance</span>
+                    <span class="k">if</span> <span class="n">instance</span><span class="p">[</span><span class="s1">&#39;State&#39;</span><span class="p">][</span><span class="s1">&#39;Code&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">80</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] instance &#39;</span><span class="si">{</span><span class="n">instance</span><span class="p">[</span><span class="s1">&#39;InstanceId&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39; has stopped: starting instance&quot;</span><span class="p">)</span>
+                        <span class="n">result</span> <span class="o">=</span> <span class="n">EC2</span><span class="o">.</span><span class="n">start_instances</span><span class="p">(</span><span class="n">InstanceIds</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;i-06b5a6f33be47f482&quot;</span><span class="p">])</span>
+
+                    <span class="c1"># Instance has target tags AND also is in running state</span>
+                    <span class="k">if</span> <span class="n">instance</span><span class="p">[</span><span class="s1">&#39;State&#39;</span><span class="p">][</span><span class="s1">&#39;Code&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">16</span> <span class="ow">or</span> <span class="n">instance</span><span class="p">[</span><span class="s1">&#39;State&#39;</span><span class="p">][</span><span class="s1">&#39;Code&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;[INFO] instance &#39;</span><span class="si">{</span><span class="n">instance</span><span class="p">[</span><span class="s1">&#39;InstanceId&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39; is already running: so not doing anything&quot;</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="p">{</span>
+                            <span class="s2">&quot;newInstanceLaunched&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                            <span class="s2">&quot;old-instanceId&quot;</span><span class="p">:</span> <span class="n">instance</span><span class="p">[</span><span class="s1">&#39;InstanceId&#39;</span><span class="p">],</span>
+                            <span class="s2">&quot;new-instanceId&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+                        <span class="p">}</span></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Darren Gebler
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

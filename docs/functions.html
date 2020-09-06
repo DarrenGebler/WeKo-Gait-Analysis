@@ -1,0 +1,477 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Python Scripts &mdash; WeKoGaitAnalysis 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="WeKo’s Gait Analysis Project" href="README.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> WeKoGaitAnalysis
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">WeKo’s Gait Analysis Project</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Python Scripts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#weko-gait-ec2prediction">WeKo Gait EC2Prediction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-src.Lambda">WeKo Gait Lambda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-src.ModelFitting">WeKo Gait Model Fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-src.NormaliseAndSplit">WeKo Gait Normalise and Split</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#weko-gait-smtp-email">WeKo Gait SMTP Email</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#weko-gait-user-database">WeKo Gait User Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-src.OpenPoseLocal">WeKo Gait Local Openpose</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">WeKoGaitAnalysis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Python Scripts</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/functions.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="python-scripts">
+<h1>Python Scripts<a class="headerlink" href="#python-scripts" title="Permalink to this headline">¶</a></h1>
+<p>Functions and Classes used</p>
+<div class="section" id="weko-gait-ec2prediction">
+<h2>WeKo Gait EC2Prediction<a class="headerlink" href="#weko-gait-ec2prediction" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="src.EC2Prediction.UserVideo">
+<em class="property">class </em><code class="sig-prename descclassname">src.EC2Prediction.</code><code class="sig-name descname">UserVideo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/EC2Prediction.html#UserVideo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.EC2Prediction.UserVideo" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="src.EC2Prediction.UserVideo.average_score">
+<code class="sig-name descname">average_score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/EC2Prediction.html#UserVideo.average_score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.EC2Prediction.UserVideo.average_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the average prediction, decision function and score based on model output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return avg_prediction</dt>
+<dd class="field-odd"><p>Average prediction</p>
+</dd>
+<dt class="field-even">Return avg_scores</dt>
+<dd class="field-even"><p>Average decision function</p>
+</dd>
+<dt class="field-odd">Return avg_score_samples</dt>
+<dd class="field-odd"><p>Average score sample</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="src.EC2Prediction.UserVideo.check_emails">
+<code class="sig-name descname">check_emails</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/EC2Prediction.html#UserVideo.check_emails"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.EC2Prediction.UserVideo.check_emails" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether email entered by user is in database of users. If so, changes filename
+uploaded to the original filename plus a time ID.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="src.EC2Prediction.UserVideo.clean_up">
+<code class="sig-name descname">clean_up</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/EC2Prediction.html#UserVideo.clean_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.EC2Prediction.UserVideo.clean_up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes EC2 files and folders that were created by script.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="src.EC2Prediction.UserVideo.openpose_splits">
+<code class="sig-name descname">openpose_splits</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/EC2Prediction.html#UserVideo.openpose_splits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.EC2Prediction.UserVideo.openpose_splits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs OpenPose on all split videos created in split_video function and stores keypoints in
+their respective folders. Calls convert_json function to make prediction on keypoints generated.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="src.EC2Prediction.UserVideo.process">
+<code class="sig-name descname">process</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/EC2Prediction.html#UserVideo.process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.EC2Prediction.UserVideo.process" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes extension from uploaded file to just get filename.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="src.EC2Prediction.UserVideo.split_video">
+<code class="sig-name descname">split_video</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/EC2Prediction.html#UserVideo.split_video"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.EC2Prediction.UserVideo.split_video" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalises video to 24 fps. Gets uploaded video duration and splits video into x 2 second segements.
+Removes original uploaded file from EC2 instance.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="src.EC2Prediction.UserVideo.upload_s3">
+<code class="sig-name descname">upload_s3</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">predict</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/EC2Prediction.html#UserVideo.upload_s3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.EC2Prediction.UserVideo.upload_s3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uploads generated video made in writing_video function. Zips and uploads keypoints generated in openpose_splits
+function. Uploads text file generated from write_to_text function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>predict</strong> – -1 if patient predicted to require surgery, 0 if predicted not to require surgery</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="src.EC2Prediction.UserVideo.write_to_text">
+<code class="sig-name descname">write_to_text</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/EC2Prediction.html#UserVideo.write_to_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.EC2Prediction.UserVideo.write_to_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes prediction scores to text file. Used to upload back to AWS S3. Calls average_score function to
+calculate average prediction, decision function and score sample.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>-1 if prediction average thinks walking is abnormal. 0 if prediction average thinks walking is normal.
+Used to store keypoints respective folders in S3 bucket.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="src.EC2Prediction.UserVideo.writing_video">
+<code class="sig-name descname">writing_video</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/EC2Prediction.html#UserVideo.writing_video"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.EC2Prediction.UserVideo.writing_video" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overlays OpenPose generated keypoints over users original video.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Filename of generated video.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-src.EC2Prediction"></span><dl class="py function">
+<dt id="src.EC2Prediction.convert_json">
+<code class="sig-prename descclassname">src.EC2Prediction.</code><code class="sig-name descname">convert_json</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/EC2Prediction.html#convert_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.EC2Prediction.convert_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts JSON keypoints generated from OpenPose into a NumPy array to be used for predictions. Deletes
+confidence score generated by OpenPose.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> – Path to the folder containing OpenPose generated JSON keypoint files.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Prediction made by iso_prediction function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="src.EC2Prediction.download_videos">
+<code class="sig-prename descclassname">src.EC2Prediction.</code><code class="sig-name descname">download_videos</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/EC2Prediction.html#download_videos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.EC2Prediction.download_videos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main function of script. Downloads videos from S3 bucket and begins analysing each video if there are videos in the
+bucket. If no videos present, EC2 will shutdown.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>False if no videos are in processing folder.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="src.EC2Prediction.iso_prediction">
+<code class="sig-prename descclassname">src.EC2Prediction.</code><code class="sig-name descname">iso_prediction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/EC2Prediction.html#iso_prediction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.EC2Prediction.iso_prediction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes prediction on keypoints generated by OpenPose on the user video submitted. Returns -1 or 1 if
+model predicts that the patient requires surgery or not. Returns decision function based on prediction.
+Returns score sample based on how far from the mean the keypoints are.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> – Keypoint array generated by OpenPose.</p>
+</dd>
+<dt class="field-even">Return prediction</dt>
+<dd class="field-even"><p>-1 predicting patient needs surgery. 1 prediction patient does not need surgery</p>
+</dd>
+<dt class="field-odd">Return score</dt>
+<dd class="field-odd"><p>Decision function of prediction</p>
+</dd>
+<dt class="field-even">Return score_samp</dt>
+<dd class="field-even"><p>Score sample of prediction</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-src.Lambda">
+<span id="weko-gait-lambda"></span><h2>WeKo Gait Lambda<a class="headerlink" href="#module-src.Lambda" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="src.Lambda.lambda_handler">
+<code class="sig-prename descclassname">src.Lambda.</code><code class="sig-name descname">lambda_handler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">raw_event</span></em>, <em class="sig-param"><span class="n">context</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/Lambda.html#lambda_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.Lambda.lambda_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main function call when file is uploaded to gait-analysis/input folder</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>raw_event</strong> – Event that occured</p></li>
+<li><p><strong>context</strong> – Methods and properties of Lambda</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary of Instance states</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-src.ModelFitting">
+<span id="weko-gait-model-fitting"></span><h2>WeKo Gait Model Fitting<a class="headerlink" href="#module-src.ModelFitting" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="src.ModelFitting.iso_forest">
+<code class="sig-prename descclassname">src.ModelFitting.</code><code class="sig-name descname">iso_forest</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key_points</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/ModelFitting.html#iso_forest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.ModelFitting.iso_forest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an Isolation Forest model on training processed key points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key_points</strong> – Numpy array of key points</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="src.ModelFitting.preprocess">
+<code class="sig-prename descclassname">src.ModelFitting.</code><code class="sig-name descname">preprocess</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_unprocessed</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/ModelFitting.html#preprocess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.ModelFitting.preprocess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepossesses data to remove confidence scores generated by OpenPose
+:param data_unprocessed: Unprocessed data from training.csv file</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-src.NormaliseAndSplit">
+<span id="weko-gait-normalise-and-split"></span><h2>WeKo Gait Normalise and Split<a class="headerlink" href="#module-src.NormaliseAndSplit" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="src.NormaliseAndSplit.get_video_length">
+<code class="sig-prename descclassname">src.NormaliseAndSplit.</code><code class="sig-name descname">get_video_length</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/NormaliseAndSplit.html#get_video_length"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.NormaliseAndSplit.get_video_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets video duration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> – filename and location</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>video duration</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="src.NormaliseAndSplit.split_by_seconds">
+<code class="sig-prename descclassname">src.NormaliseAndSplit.</code><code class="sig-name descname">split_by_seconds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/NormaliseAndSplit.html#split_by_seconds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.NormaliseAndSplit.split_by_seconds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Splits video into 2 second segments, spaced 0.2 seconds apart.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> – filename and location</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="weko-gait-smtp-email">
+<h2>WeKo Gait SMTP Email<a class="headerlink" href="#weko-gait-smtp-email" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="src.SMTPEmail.SendEmail">
+<em class="property">class </em><code class="sig-prename descclassname">src.SMTPEmail.</code><code class="sig-name descname">SendEmail</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="n">email</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/SMTPEmail.html#SendEmail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.SMTPEmail.SendEmail" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="src.SMTPEmail.SendEmail.write_email">
+<code class="sig-name descname">write_email</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/SMTPEmail.html#SendEmail.write_email"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.SMTPEmail.SendEmail.write_email" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes and sends email to user.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="weko-gait-user-database">
+<h2>WeKo Gait User Database<a class="headerlink" href="#weko-gait-user-database" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="src.UserDatabase.UserData">
+<em class="property">class </em><code class="sig-prename descclassname">src.UserDatabase.</code><code class="sig-name descname">UserData</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/UserDatabase.html#UserData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.UserDatabase.UserData" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="src.UserDatabase.UserData.find_file">
+<code class="sig-name descname">find_file</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/UserDatabase.html#UserData.find_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.UserDatabase.UserData.find_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Searches text file for user email.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>filename + date/time ID if user email exists, otherwise returns None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-src.OpenPoseLocal">
+<span id="weko-gait-local-openpose"></span><h2>WeKo Gait Local Openpose<a class="headerlink" href="#module-src.OpenPoseLocal" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="src.OpenPoseLocal.run">
+<code class="sig-prename descclassname">src.OpenPoseLocal.</code><code class="sig-name descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/OpenPoseLocal.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#src.OpenPoseLocal.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs OpenPose on all videos in a specified directory. You are required to have OpenPose built, as well as OpenCV
+installed. This script currently only works on Windows. Future work will include building for MACOSX and Linux.
+Place the downloaded models in a models folder, and set the directory.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="README.html" class="btn btn-neutral float-left" title="WeKo’s Gait Analysis Project" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Darren Gebler
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
