@@ -16,7 +16,7 @@ class SendEmail:
         email = email.replace("-fullstop-", ".")
         self.useremail = email.replace("-atsymbol-", "@")
         self.senderemail = "wekohealth@gmail.com"
-        self.password = "LcVS8f55e#JT"
+        self.password = ""
 
     def write_email(self):
         """
